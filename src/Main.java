@@ -3,7 +3,7 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 public class Main {
 
-    static char[][] board = new char[][]{{'X','X','O'},{'O','O','O'},{'X','O','X'}};
+    static char[][] board = new char[][]{{'O','X','O'},{'X','O','X'},{'X','O','O'}};
 
     public static void main(String[] args) {
         System.out.println("Question 1: ");
@@ -81,17 +81,56 @@ public class Main {
 
     public static char winningBoard (char[][] board) {
         if (validGameBoard(board)) {
-            int amountX = countingABoard(board, 'X');
-            int amountO = countingABoard(board, 'O');
-
-
+            if (winningColumn(board) == 'X' || winningRows(board) == 'X' || winningDiagonal(board) == 'X'){
+                return 'X';
+            } else if (winningColumn(board) == 'O' || winningRows(board) == 'O' || winningDiagonal(board) == 'O'){
+                return 'O';
+            }
         }
         return '.';
     }
 
-    public static void winningrows(char [][] board) {
-
+    public static char winningRows(char [][] board) {
+        for (int i = 0; i < 3; i++) {
+            if (checkWin(board[i][0], board[i][1], board[i][2]) == 'X') {
+                return 'X';
+            } else if (checkWin(board[i][0], board[i][1], board[i][2]) == 'O') {
+                return 'O';
+            }
+        }
+        return '.';
     }
+
+    public static char winningColumn(char [][] board) {
+        for (int i = 0; i < 3; i++) {
+            if (checkWin(board[0][i], board[1][i], board[2][i]) == 'X') {
+                return 'X';
+            } else if (checkWin(board[0][i], board[1][i], board[2][i]) == 'O') {
+                return 'O';
+            }
+        }
+        return '.';
+    }
+
+    public static char winningDiagonal(char [][] board) {
+        for (int i = 0; i < 3; i++) {
+
+            if ((checkWin(board[0][0], board[1][1], board[2][2])) == 'X' || (checkWin(board[0][2], board[1][1], board[2][0])) == 'X') {
+                return 'X';
+            } else if ((checkWin(board[0][0], board[1][1], board[2][2])) == 'O' || (checkWin(board[0][2], board[1][1], board[2][0])) == 'O') {
+                return 'O';
+            }
+        }
+        return '.';
+    }
+
+    public static char checkWin(char a, char b, char c) {
+            if  ((a != '.') && (a == b) && (b == c)) {
+                return a;
+            }
+            return '.';
+    }
+
 
 
 
